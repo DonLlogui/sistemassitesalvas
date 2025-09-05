@@ -65,44 +65,38 @@
     document.getElementById('direccion').value = '';
   }
 
-  async function guardarMedico() {
-    const nombre = document.getElementById('nombre').value;
-    const especialidad = document.getElementById('especialidad').value;
-    const telefono = document.getElementById('telefono').value;
-    const correo = document.getElementById('correo').value;
-    const direccion = document.getElementById('direccion').value;
+async function guardarMedico() {
+  const nombre = document.getElementById('nombre').value;
+  const especialidad = document.getElementById('especialidad').value;
+  const telefono = document.getElementById('telefono').value;
+  const correo = document.getElementById('correo').value;
+  const direccion = document.getElementById('direccion').value;
 
-    const datos = {
-      t1: nombre,
-      t2: especialidad,
-      t3: telefono,
-      t4: correo,
-      t5: direccion
-    };
+  const datos = {
+    t1: nombre,
+    t2: especialidad,
+    t3: telefono,
+    t4: correo,
+    t5: direccion
+  };
 
-    if (modo === 'crear') {
-      await fetch(apiURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
-    } else if (modo === 'editar') {
-      await fetch(`${apiURL}/${medicoEditando}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nombres: nombre,
-          especialidad,
-          telefono,
-          correo,
-          direccion
-        })
-      });
-    }
-
-    cerrarModal();
-    cargarMedicos();
+  if (modo === 'crear') {
+    await fetch(apiURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+  } else if (modo === 'editar') {
+    await fetch(`${apiURL}/${medicoEditando}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)  // <== USAMOS MISMA ESTRUCTURA
+    });
   }
+
+  cerrarModal();
+  cargarMedicos();
+}
 
   async function eliminarMedico(id) {
     const confirmar = confirm('¿Estás seguro de que deseas eliminar este médico?');
